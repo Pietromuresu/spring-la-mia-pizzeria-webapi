@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -45,9 +47,11 @@ public class Pizza {
 	
 	
 	@OneToMany(mappedBy= "pizza")
+	@JsonManagedReference
 	private List<Offer> offers;
 	
 	@ManyToMany()
+	@JsonManagedReference
 	private List<Ingredient> ingredients;
 	
 

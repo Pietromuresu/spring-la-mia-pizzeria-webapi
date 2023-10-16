@@ -17,9 +17,11 @@ public class SecurityConfiguration {
 	SecurityFilterChain filterChain(HttpSecurity http)
 		throws Exception {
 			 
-			http.authorizeHttpRequests()
+		http.csrf().disable()
+			.authorizeHttpRequests()
 	        // ADMIN AUTHORIZATION
 			// PIZZAS
+			.requestMatchers("/api/v1.0/**").permitAll()
 			.requestMatchers("/create").hasAuthority("ADMIN")
 	        .requestMatchers("/update/**").hasAuthority("ADMIN")
 	        .requestMatchers("/delete/**").hasAuthority("ADMIN")
