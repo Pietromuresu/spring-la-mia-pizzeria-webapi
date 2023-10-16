@@ -20,7 +20,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
-public class SpringLaMiaPizzeriaSecurityApplication implements CommandLineRunner{
+public class SpringLaMiaPizzeriaWebApiApplication implements CommandLineRunner{
 	
 	@Autowired
 	private PizzaRepo pizzaRepo;
@@ -38,7 +38,7 @@ public class SpringLaMiaPizzeriaSecurityApplication implements CommandLineRunner
 	private RoleRepo roleRepo;
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringLaMiaPizzeriaSecurityApplication.class, args);
+		SpringApplication.run(SpringLaMiaPizzeriaWebApiApplication.class, args);
 	}
 
 	@Override
