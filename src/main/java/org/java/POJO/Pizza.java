@@ -64,6 +64,7 @@ public class Pizza {
 		setName(pizzaDto.getName());
 		setPrice(pizzaDto.getPrice());
 	}
+	
 	public Pizza(String name, String description, String fotoUrl, BigDecimal price, Ingredient... ingredient) {
 		
 		setDescription(description);
@@ -150,6 +151,14 @@ public class Pizza {
 			
 		
 		return false;
+	}
+	
+	public void updatePizzaFromDto(PizzaDTO pizzaDto) {
+		
+		setDescription(pizzaDto.getDescription());
+		setFotoUrl(pizzaDto.getFotoUrl());
+		setName(pizzaDto.getName());
+		setPrice(pizzaDto.getPrice());
 	}
 	
 	@Override
