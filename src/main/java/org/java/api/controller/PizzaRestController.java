@@ -3,6 +3,7 @@ package org.java.api.controller;
 import java.util.List;
 
 import org.java.POJO.Pizza;
+import org.java.api.DTO.PizzaDTO;
 import org.java.serv.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,6 +46,16 @@ public class PizzaRestController {
 		
 		Pizza pizzas = pizzaServ.findById(Long.valueOf(id));
 		
-		return new ResponseEntity<Pizza>(pizzas, HttpStatus.OK);
+		return new ResponseEntity<Pizza>(pizzas, HttpStatus.BAD_REQUEST);
+	}
+	
+	@PostMapping("/add")
+	public ResponseEntity<Pizza> addNew(@RequestBody PizzaDTO  pizzaDto) {
+		
+		Pizza pizza = new Pizza(pizzaDto);
+		
+		pizza = pizzaServ.save(pizza);
+		
+		return new ResponseEntity<>(pizza, HttpStatus.OK);
 	}
 }

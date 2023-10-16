@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
+import org.java.api.DTO.PizzaDTO;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -56,6 +57,13 @@ public class Pizza {
 	
 
 	public Pizza() {}
+	
+	public Pizza(PizzaDTO pizzaDto) {
+		setDescription(pizzaDto.getDescription());
+		setFotoUrl(pizzaDto.getFotoUrl());
+		setName(pizzaDto.getName());
+		setPrice(pizzaDto.getPrice());
+	}
 	public Pizza(String name, String description, String fotoUrl, BigDecimal price, Ingredient... ingredient) {
 		
 		setDescription(description);
