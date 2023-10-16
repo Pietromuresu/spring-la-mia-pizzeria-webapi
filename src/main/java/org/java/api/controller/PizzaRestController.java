@@ -52,16 +52,17 @@ public class PizzaRestController {
 	
 	
 	@GetMapping("{id}")
-	public ResponseEntity<Pizza> getById(@PathVariable("id") int id) {
+	public ResponseEntity<Object> getById(@PathVariable("id") int id) {
 		
 		Optional<Pizza> pizza = pizzaServ.findById(Long.valueOf(id));
 		
 		if(pizza.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			String response = "Nessuna pizza trovata con questo id";
+			return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 		}
 		
 
-		return new ResponseEntity<Pizza>(pizza.get(), HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(pizza.get(), HttpStatus.OK);
 	}
 	
 	
@@ -77,14 +78,15 @@ public class PizzaRestController {
 	
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<Pizza> addNew(
+	public ResponseEntity<Object> addNew(
 			@PathVariable int id,
 			@RequestBody PizzaDTO  pizzaDto) {
 		
 		Optional<Pizza> pizza = pizzaServ.findById(Long.valueOf(id));
 		
 		if(pizza.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			String response = "Nessuna pizza trovata con questo id";
+			return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 		}
 		
 		Pizza pizzaToUpdate = pizza.get();
@@ -107,7 +109,8 @@ public class PizzaRestController {
 		Optional<Pizza> pizza = pizzaServ.findById(Long.valueOf(id));
 		
 		if(pizza.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			String response = "Nessuna pizza trovata con questo id";
+			return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 		}
 		
 		Pizza pizzaToDelete = pizza.get();
