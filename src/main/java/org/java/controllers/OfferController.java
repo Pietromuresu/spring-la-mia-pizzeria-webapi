@@ -72,7 +72,7 @@ public class OfferController {
 			BindingResult bindingResult,
 			@PathVariable("pizza_id") int id) {
 		
-		Pizza pizza = pizzaServ.findById(Long.valueOf(id));
+		Pizza pizza = pizzaServ.findById(Long.valueOf(id)).get();
 		
 		
 		if (bindingResult.hasErrors()) {

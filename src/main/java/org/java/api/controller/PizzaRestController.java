@@ -3,13 +3,16 @@ package org.java.api.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.java.POJO.Offer;
 import org.java.POJO.Pizza;
 import org.java.api.DTO.PizzaDTO;
+import org.java.serv.OfferService;
 import org.java.serv.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +29,9 @@ public class PizzaRestController {
 	
 	@Autowired
 	private PizzaService pizzaServ;
+	
+	@Autowired
+	private OfferService offerServ;
 	
 	@GetMapping("/all")
 	public ResponseEntity<List<Pizza>> getAll() {
@@ -86,7 +92,7 @@ public class PizzaRestController {
 		
 		try {
 			
-		pizzaServ.save(pizzaToUpdate);
+			pizzaServ.save(pizzaToUpdate);
 		}catch(Exception e) {
 			
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -96,5 +102,26 @@ public class PizzaRestController {
 	}
 	
 	
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<String> delete(@PathVariable int id){
+		Optional<Pizza> pizza = pizzaServ.findById(Long.valueOf(id));
+		
+		if(pizza.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		Pizza pizzaToDelete = pizza.get();
+		
+		if(pizzaToDelete.getOffers().size() > 0) {
+			for(Offer offer : pizzaToDelete.getOffers() ) {
+				
+				offerServ.deleteById(offer.getId());
+			}
+		}
+		
+		pizzaServ.deleteById(Long.valueOf(id));
+		
+		return new ResponseEntity<>("Deleted succesfully", HttpStatus.OK);
+	}
 	
 }

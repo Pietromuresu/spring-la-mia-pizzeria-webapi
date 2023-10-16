@@ -67,7 +67,7 @@ public class MainController {
 	public String updatePizza(@PathVariable Long id , Model model) {
 		
 		List<Ingredient> ingredients = ingredientServ.findAll();
-		Pizza pizzaToUpdate = pizzaServ.findById(id);
+		Pizza pizzaToUpdate = pizzaServ.findById(id).get();
 
 		model.addAttribute("allIngredients", ingredients);
 		model.addAttribute("pizza", pizzaToUpdate);
@@ -110,7 +110,7 @@ public class MainController {
 	@GetMapping("/pizza/{id}")
 	public String show(@PathVariable Long id, Model model) {
 		
-		Pizza pizza = pizzaServ.findById(id);
+		Pizza pizza = pizzaServ.findById(id).get();
 		
 		model.addAttribute("pizza", pizza);
 		
@@ -120,7 +120,7 @@ public class MainController {
 	@PostMapping("/delete/{id}")
 	public String deletePizza(@PathVariable("id") Long id) {
 		
-		Pizza pizza = pizzaServ.findById(id);
+		Pizza pizza = pizzaServ.findById(id).get();
 		for(Offer offer : pizza.getOffers()) {
 			offerServ.deleteById(offer.getId());
 		}
