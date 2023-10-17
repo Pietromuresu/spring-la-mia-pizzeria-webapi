@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -32,19 +33,20 @@ public class PizzaRestController {
 	
 	@Autowired
 	private OfferService offerServ;
+
 	
 	@GetMapping("/all")
-	public ResponseEntity<List<Pizza>> getAll() {
-		
-		List<Pizza> pizzas = pizzaServ.findAll();
-		
-		return new ResponseEntity<List<Pizza>>(pizzas, HttpStatus.OK);
-	}
+	public ResponseEntity<List<Pizza>> getPizzas(@RequestParam(required = false, name = "name") String name) {
 	
-	@GetMapping("/all/{name}")
-	public ResponseEntity<List<Pizza>> getByName(@PathVariable("name") String name) {
+		List<Pizza> pizzas = null;
 		
-		List<Pizza> pizzas = pizzaServ.findByName(name);
+		if(name != null) {
+			
+			 pizzas = pizzaServ.findByName(name);
+		}else {
+		
+			pizzas = pizzaServ.findAll();
+		}
 		
 		
 		return new ResponseEntity<List<Pizza>>(pizzas, HttpStatus.OK);
