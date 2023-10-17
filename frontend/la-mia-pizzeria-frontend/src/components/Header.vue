@@ -1,6 +1,6 @@
 <script setup>
+import store from "../stores/store"
   const name = "Header";
-
 </script>
 
 <template>
@@ -18,13 +18,9 @@
 			
 		</div>
 		<div class="d-flex">	
-				
-		    <form 
-        onsubmit=""
-		    	class="d-flex form-inline" 
-		    	role="search" >
-		    	
+					
 		      <input 
+						v-model.trim="store.nameParam.value"
 		      	class="form-control me-2" 
 		      	type="text" 
 		      	placeholder="Search a pizza" 
@@ -33,12 +29,11 @@
 		      	th:value="${searchedName}">
 		      
 		      <button 
+					@click="store.getPizzas(store.nameParam.value)"
 		      	class="btn btn-outline-secondary" 
 		      	type="submit">
 		      	Search
 		      </button>
-		    
-		    </form>
 			
 			
 		</div>

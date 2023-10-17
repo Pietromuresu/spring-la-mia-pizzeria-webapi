@@ -1,25 +1,16 @@
 
 <script setup>
   import { ref, onMounted } from "vue";
+  import store from "../stores/store";
   import axios from 'axios'
   const name = "Home";
-  const API_URL = "http://localhost:8080/api/v1.0/";
-  const IMG_BASE_URL = "http://localhost:8080/imgs/";
-
-  let pizza = ref([]);
-
-  async function getAllPizzas(){
-    axios.get(API_URL + "all")
-          .then(res => {
-            const data = res.data;
-            pizza.value = data;
-          })
-          .catch(err => console.log(err));
-  }
   
 
+  let pizza = ref([]);
+  let nameParam = "";
+  
   onMounted(() => {
-    getAllPizzas()
+    store.getPizzas(store.nameParam.value)
   })
 </script>
 
@@ -33,10 +24,10 @@
           <h2>Menù</h2>
           <div class="btn btn-secondary h-50">Add new </div>
         </div>
-        <div v-show="pizza != null" class="row row-cols-4">
-          <div  class="col" v-for="pi in pizza" :key="pi.id">
+        <div v-if="store.pizza.value.length > 0" class="row row-cols-4">
+          <div  class="col" v-for="pi in store.pizza.value" :key="pi.id">
             <div class="card mt-4">
-              <img class="card-img-top" :src="`${IMG_BASE_URL + pi.fotoUrl}`" :alt="pi.name">
+              <img class="card-img-top" :src="`${store.IMG_BASE_URL + pi.fotoUrl}`" :alt="pi.name">
               <div class="card-body">
                 <h5 class="card-title">{{  pi.name  }}</h5>
                 <p class="card-text">{{pi.description }}</p>
@@ -54,6 +45,9 @@
             </div>
 
           </div>
+        </div>
+        <div v-else class="mt-4">
+          <h4 class="text-center">Non ci sono pizze..</h4>
         </div>
       </div>
     </div>
