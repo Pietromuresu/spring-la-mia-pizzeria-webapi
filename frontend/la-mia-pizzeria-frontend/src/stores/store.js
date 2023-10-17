@@ -7,15 +7,16 @@ export default{
   toUpdate: false,
 
   fillForm(pizza){
-    
+      this.newPizza.value.id = pizza.id
       this.newPizza.value.name= pizza.name;
       this.newPizza.value.description= pizza.description;
       this.newPizza.value.fotoUrl= pizza.fotoUrl;
       this.newPizza.value.price= pizza.price;
 
+      console.log(this.newPizza.value);
   },
   cleanForm(){
-    
+      this.newPizza.value.id= null;
       this.newPizza.value.name= null;
       this.newPizza.value.description= null;
       this.newPizza.value.fotoUrl= null;

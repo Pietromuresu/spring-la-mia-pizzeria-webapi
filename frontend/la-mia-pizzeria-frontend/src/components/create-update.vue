@@ -2,6 +2,7 @@
 <script setup>
 import Header from '../components/Header.vue'
 import { ref} from 'vue'
+import router from '../router';
 import axios from 'axios';
 import store from "../stores/store";
   const name = "create-update";
@@ -13,14 +14,17 @@ import store from "../stores/store";
     axios.post(store.API_URL + "add", store.newPizza.value)
           .then(res =>{
             console.log(res.data);
+            router.push({ path: '/' })
           })
           .catch(error => this.error = error);
   };
 
-  function updateNew(){
-    axios.post(store.API_URL + "add", store.newPizza.value)
+  function updateNew(id){
+    axios.put(store.API_URL + "update/" + id, store.newPizza.value)
           .then(res =>{
+            console.log(store.newPizza.value.id);
             console.log(res.data);
+            router.push({ path: '/' })
           })
           .catch(error => this.error = error);
   };
@@ -33,7 +37,7 @@ import store from "../stores/store";
     <div class="container w-25">
 
       <h1>Aggiungi pizza</h1>
-      <form @submit.prevent="addNew()">
+      <form @submit.prevent="`${!store.toUpdate  ? addNew() : updateNew(store.newPizza.value.id)}`">
         <div class="input-box mt-5 ">
           <label for="description" class="form-label"><strong> Nome </strong> </label>
           <input
@@ -61,7 +65,7 @@ import store from "../stores/store";
         <input
             v-model="store.newPizza.value.price"
             class=" form-control "
-            type="number"
+            type="float"
             placeholder="Es. 3,50 &euro;"> <br>
           <div v-if="error">
             ERROR
