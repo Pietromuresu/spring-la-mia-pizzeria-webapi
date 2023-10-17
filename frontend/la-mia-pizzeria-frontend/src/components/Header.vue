@@ -1,5 +1,6 @@
 <script setup>
-import store from "../stores/store"
+	import store from "../stores/store"
+
   const name = "Header";
 </script>
 

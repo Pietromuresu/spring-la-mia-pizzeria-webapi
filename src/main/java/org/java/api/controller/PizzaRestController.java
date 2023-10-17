@@ -69,12 +69,17 @@ public class PizzaRestController {
 	
 	
 	@PostMapping("/add")
-	public ResponseEntity<Pizza> addNew(@RequestBody PizzaDTO  pizzaDto) {
+	public ResponseEntity<Object> addNew(@RequestBody PizzaDTO  pizzaDto) {
 		
 		Pizza pizza = new Pizza(pizzaDto);
-		
+//		try {
+			
 		pizza = pizzaServ.save(pizza);
-		
+//		}catch(Exception e) {
+//			
+//			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//		}
+//		
 		return new ResponseEntity<>(pizza, HttpStatus.OK);
 	}
 	

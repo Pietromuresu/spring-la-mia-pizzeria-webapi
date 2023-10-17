@@ -4,14 +4,9 @@ import Header from '../components/Header.vue'
 </script>
 
 <template>
-  <Header />
-  <main class="main">
-    <Home />
-  </main>
+  <Home />
 </template>
 
 <style scoped>
-.main{
-  margin-top: 60px;
-}
+
 </style>
